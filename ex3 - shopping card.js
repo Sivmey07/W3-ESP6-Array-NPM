@@ -25,9 +25,9 @@ function getCartTotalAmount() {
   SHOPPING_CART.forEach (cartItem => {
     const product = PRODUCTS.find(p => p.id === cartItem.id);
     if (product) {
-      total += product.price * cartItem.quantity
+      result += product.price * cartItem.quantity;
     }
-  })
+  });
 
   return result;
 }
@@ -45,6 +45,12 @@ function getCartTotalAmount() {
  */
 function addProductToCart(productId) {
   // Write your code here
+  let cartItem = SHOPPING_CART.find(item => item.id === productId);
+  if (cartItem) {
+    cartItem.quantity += 1;
+  } else {
+    SHOPPING_CART.push({ id: productId, quantity: 1 });
+  }
 }
 
 /**
@@ -63,6 +69,14 @@ function addProductToCart(productId) {
  */
 function removeProductFromCart(productId) {
   // Write your code here
+  let index = SHOPPING_CART.findIndex(item => item.id === productId);
+  if (index !== -1) {
+    if (SHOPPING_CART[index].quantity > 1) {
+      SHOPPING_CART[index].quantity -= 1;
+    } else {
+      SHOPPING_CART.splice(index, 1);
+    }
+  }
 }
 
 // --------------------------------------------------------
@@ -70,20 +84,21 @@ function removeProductFromCart(productId) {
 // --------------------------------------------------------
 
 // test 1  -
-console.log(getCartTotalAmount()); //  Shoud be  8
+  console.log(getCartTotalAmount()); //  Shoud be  8
 
 // test 2  -
-addProductToCart(1);
-console.log(JSON.stringify(SHOPPING_CART)); //  Shoud be    [{"id":1,"quantity":3},{"id":3,"quantity":1}]
+  addProductToCart(1);
+  console.log(JSON.stringify(SHOPPING_CART)); //  Shoud be    [{"id":1,"quantity":3},{"id":3,"quantity":1}]
 
 // test 3  -
-addProductToCart(2);
-console.log(JSON.stringify(SHOPPING_CART)); //  Shoud be    [{"id":1,"quantity":3},{"id":3,"quantity":1},{"id":2,"quantity":1}]
+  addProductToCart(2);
+  console.log(JSON.stringify(SHOPPING_CART)); //  Shoud be    [{"id":1,"quantity":3},{"id":3,"quantity":1},{"id":2,"quantity":1}] 
 
 // test 4  -
-removeProductFromCart(1);
-console.log(JSON.stringify(SHOPPING_CART)); //  Shoud be    [{"id":1,"quantity":2},{"id":3,"quantity":1},{"id":2,"quantity":1}]
+  removeProductFromCart(1);
+  console.log(JSON.stringify(SHOPPING_CART)); //  Shoud be    [{"id":1,"quantity":2},{"id":3,"quantity":1},{"id":2,"quantity":1}]
 
 // test 5  -
-removeProductFromCart(2);
-console.log(JSON.stringify(SHOPPING_CART)); //  Shoud be    [{"id":1,"quantity":2},{"id":3,"quantity":1}]
+  removeProductFromCart(2);
+  console.log(JSON.stringify(SHOPPING_CART)); //  Shoud be    [{"id":1,"quantity":2},{"id":3,"quantity":1}] 
+  
